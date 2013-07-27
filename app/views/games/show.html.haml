@@ -1,5 +1,12 @@
 / %div Guesses left: #{game.guesses_left}
 
+.word
+  - game.word.split('').each do |letter|
+    - if game.guesses.include?(letter)
+      = letter
+    - else
+      _
+
 %div Guesses: #{game.guesses.to_a.join ', '}
 
 %ul

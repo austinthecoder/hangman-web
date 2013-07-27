@@ -1,0 +1,1 @@
+Hangman.word_list = ['hangman']
