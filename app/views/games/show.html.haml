@@ -1,13 +1,8 @@
+= image_tag "60px-Hangman-#{game.incorrect_guesses.size}.png", :alt => "#{6 - game.incorrect_guesses.size} guesses left"
+
 #word
   - game.word.split('').each do |letter|
-    - if game.guesses.include?(letter)
-      = letter
-    - else
-      _
-
-%hr
-
-%div Guesses left: #{7 - game.incorrect_guesses.size}
+    = game.guesses.include?(letter) ? letter : '_'
 
 %hr
 
