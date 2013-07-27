@@ -1,19 +1,29 @@
-/ %div Guesses left: #{game.guesses_left}
-
-.word
+#word
   - game.word.split('').each do |letter|
     - if game.guesses.include?(letter)
       = letter
     - else
       _
 
+%hr
+
+%div Guesses left: #{7 - game.incorrect_guesses.size}
+
+%hr
+
 %div Guesses: #{game.guesses.to_a.join ', '}
 
-%ul
-  - ('a'..'z').each do |letter|
-    - if game.guesses.include?(letter)
-      %strike #{letter}
-    - else
-      = form_tag game_guesses_path do |f|
-        = hidden_field_tag :letter, letter
-        = button_tag letter
+%hr
+
+%div
+  - case game.status
+  - when :won
+    You win!
+  - when :lost
+    You lose!
+  - else
+    - ('a'..'z').each do |letter|
+      - unless game.guesses.include?(letter)
+        = form_tag game_guesses_path, :style => 'display: inline;' do |f|
+          = hidden_field_tag :letter, letter
+          = button_tag letter

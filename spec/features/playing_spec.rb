@@ -3,58 +3,68 @@ require 'spec_helper'
 Capybara.exact = true
 
 feature 'Playing the game' do
-  scenario do
+  before do
     Hangman.word_list = ['hangman']
 
     visit '/'
-
     click_on 'Start a new game'
+  end
 
-    within '.word' do
-      page.should have_content '_ _ _ _ _ _ _'
-    end
+  scenario 'winning game' do
+    page.should have_content "Guesses left: 7"
+    word_should_be '_ _ _ _ _ _ _'
 
     click_on 'e'
 
     page.should have_content "Guesses: e"
-    within '.word' do
-      page.should have_content '_ _ _ _ _ _ _'
-    end
+    page.should have_content "Guesses left: 6"
+    word_should_be '_ _ _ _ _ _ _'
 
     click_on 'g'
+
     page.should have_content "Guesses: e, g"
-    within '.word' do
-      page.should have_content '_ _ _ g _ _ _'
-    end
+    page.should have_content "Guesses left: 6"
+    word_should_be '_ _ _ g _ _ _'
 
     click_on 'a'
+
     page.should have_content "Guesses: e, g, a"
-    within '.word' do
-      page.should have_content '_ a _ g _ a _'
-    end
+    page.should have_content "Guesses left: 6"
+    word_should_be '_ a _ g _ a _'
 
     click_on 'f'
+
     page.should have_content "Guesses: e, g, a, f"
-    within '.word' do
-      page.should have_content '_ a _ g _ a _'
-    end
+    page.should have_content "Guesses left: 5"
+    word_should_be '_ a _ g _ a _'
 
     click_on 'h'
+
     page.should have_content "Guesses: e, g, a, f, h"
-    within '.word' do
-      page.should have_content 'h a _ g _ a _'
-    end
+    page.should have_content "Guesses left: 5"
+    word_should_be 'h a _ g _ a _'
 
     click_on 'n'
+
     page.should have_content "Guesses: e, g, a, f, h, n"
-    within '.word' do
-      page.should have_content 'h a n g _ a n'
-    end
+    page.should have_content "Guesses left: 5"
+    word_should_be 'h a n g _ a n'
 
     click_on 'm'
+
     page.should have_content "Guesses: e, g, a, f, h, n"
-    within '.word' do
-      page.should have_content 'h a n g m a n'
-    end
+    page.should have_content "Guesses left: 5"
+    word_should_be 'h a n g m a n'
+
+    page.should have_content 'You win!'
+  end
+
+  scenario 'losing game' do
+    %w[x y z q f k h a n g l].each { |l| click_on l }
+    page.should have_content 'You lose!'
+  end
+
+  def word_should_be(word)
+    within('#word') { page.should have_content word }
   end
 end
