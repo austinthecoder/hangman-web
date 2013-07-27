@@ -1,11 +1,11 @@
 class GamesController < ApplicationController
   def create
-    SessionGame.start(session)
+    start_game!
     redirect_to game_url
   end
 
   def show
-    @game = SessionGame.current(session)
+    @game = fetch_current_game
   end
   attr_reader :game
   helper_method :game

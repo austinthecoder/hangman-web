@@ -1,8 +1,8 @@
 class GuessesController < ApplicationController
   def create
-    game = SessionGame.current(session)
+    game = fetch_current_game
     game.guess(params[:letter])
-    SessionGame.save(session, game)
+    save_game game
     redirect_to game_url
   end
 end

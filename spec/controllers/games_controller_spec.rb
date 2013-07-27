@@ -3,7 +3,7 @@ require 'spec_helper'
 describe GamesController do
   describe 'POST create' do
     it 'starts a session game' do
-      SessionGame.should_receive(:start).with(session)
+      controller.should_receive(:start_game!)
       post :create
     end
 
@@ -16,7 +16,7 @@ describe GamesController do
   describe 'GET show' do
     it 'assigns the current game' do
       game = double 'game'
-      SessionGame.stub(:current).with(session) { game }
+      controller.stub(:fetch_current_game) { game }
       get :show
       assigns(:game).should eq(game)
     end
