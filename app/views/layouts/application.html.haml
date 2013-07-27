@@ -6,4 +6,9 @@
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
   %body
+    = form_tag game_path do
+      = button_tag 'Start a new game'
+
+    %hr
+
     = yield
