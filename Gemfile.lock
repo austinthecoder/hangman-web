@@ -1,3 +1,8 @@
+PATH
+  remote: ../hangman
+  specs:
+    hangman (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -130,6 +135,7 @@ DEPENDENCIES
   capybara (~> 2.1)
   coffee-rails (~> 4.0.0)
   haml-rails (~> 0.4)
+  hangman!
   jquery-rails (~> 3.0)
   rails (= 4.0.0)
   rspec-rails (~> 2.14)
