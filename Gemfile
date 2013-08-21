@@ -14,4 +14,5 @@ gem 'hangman', :path => '../hangman'
 group :test do
   gem 'rspec-rails', '~> 2.14'
   gem 'capybara', '~> 2.1'
+  gem "launchy", "~> 2.3"
 end
