@@ -16,46 +16,41 @@ feature 'Playing the game' do
 
     click_on 'e'
 
-    page.should have_content "Guesses: e"
+    guesses_should_be 'e'
     guesses_left_should_be 5
-
     word_should_be '_ _ _ _ _ _ _'
 
     click_on 'g'
 
-    page.should have_content "Guesses: e, g"
+    guesses_should_be 'e', 'g'
     guesses_left_should_be 5
     word_should_be '_ _ _ g _ _ _'
 
     click_on 'a'
 
-    page.should have_content "Guesses: e, g, a"
+    guesses_should_be 'e', 'g', 'a'
     guesses_left_should_be 5
     word_should_be '_ a _ g _ a _'
 
     click_on 'f'
 
-    page.should have_content "Guesses: e, g, a, f"
+    guesses_should_be 'e', 'g', 'a', 'f'
     guesses_left_should_be 4
     word_should_be '_ a _ g _ a _'
 
     click_on 'h'
 
-    page.should have_content "Guesses: e, g, a, f, h"
+    guesses_should_be 'e', 'g', 'a', 'f', 'h'
     guesses_left_should_be 4
     word_should_be 'h a _ g _ a _'
 
     click_on 'n'
 
-    page.should have_content "Guesses: e, g, a, f, h, n"
+    guesses_should_be 'e', 'g', 'a', 'f', 'h', 'n'
     guesses_left_should_be 4
     word_should_be 'h a n g _ a n'
 
     click_on 'm'
-
-    page.should have_content "Guesses: e, g, a, f, h, n"
-    guesses_left_should_be 4
-    word_should_be 'h a n g m a n'
 
     page.should have_content 'You win!'
   end
@@ -67,6 +62,12 @@ feature 'Playing the game' do
 
   def word_should_be(word)
     within('#word') { page.should have_content word }
+  end
+
+  def guesses_should_be(*letters)
+    letters.each do |letter|
+      page.find 'strike', :text => letter
+    end
   end
 
   def guesses_left_should_be(num)

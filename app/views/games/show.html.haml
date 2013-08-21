@@ -6,10 +6,6 @@
 
 %hr
 
-%div Guesses: #{game.guesses.to_a.join ', '}
-
-%hr
-
 %div
   - case game.status
   - when :won
@@ -18,7 +14,7 @@
     You lose!
   - else
     - ('a'..'z').each do |letter|
-      - unless game.guesses.include?(letter)
-        = form_tag game_guesses_path, :style => 'display: inline;' do |f|
-          = hidden_field_tag :letter, letter
-          = button_tag letter
+      - if game.guesses.include?(letter)
+        %strike= letter
+      - else
+        = link_to letter, game_guesses_path(:letter => letter)

@@ -3,5 +3,6 @@ HangmanWeb::Application.routes.draw do
 
   resource :game, :only => [:create, :show] do
     resources :guesses, :only => [:create]
+    get 'guesses', :to => 'guesses#create'
   end
 end
